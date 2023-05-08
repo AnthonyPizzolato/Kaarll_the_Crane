@@ -84,15 +84,9 @@ int main(void)
     TPM_StartTimer(BOARD_TPM_BASEADDR, kTPM_SystemClock);
     while (1)
     {
-        do
-        {
-
-            PRINTF("For example: If enter '5', the duty cycle will be set to 50 percent.\r\n");
 
 
-        } while (getCharValue > 9U);
-
-        updatedDutycycle = getCharValue * 10U;
+        updatedDutycycle = (int)((adcValue/4095) *100) ;
 
         //convert to percentage and multiply by 100
 
