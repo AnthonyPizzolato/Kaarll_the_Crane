@@ -33,6 +33,12 @@ volatile uint8_t updatedDutycycle = 10U;
  * @brief Main function
  */
 void pwminit(){
+	 tpm_config_t tpmInfo;
+    tpm_chnl_pwm_signal_param_t tpmParam[2];
+
+    #ifndef TPM_LED_ON_LEVEL
+      #define TPM_LED_ON_LEVEL kTPM_LowTrue
+    #endif
 	SIM -> SCGC5 |= SIM_SCGC5_PORTD_MASK;
 
 	PORTD-> PCR[5] = (1<<8); /* PCR5 analog input */
