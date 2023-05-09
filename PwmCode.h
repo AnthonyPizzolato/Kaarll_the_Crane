@@ -34,6 +34,15 @@ volatile uint8_t updatedDutycycle = 10U;
 /*!
  * @brief Main function
  */
+void pwminit(){
+	SIM -> SCGC5 |= SIM_SCGC5_PORTD_MASK;
+
+	PORTD-> PCR[5] = (1<<8); /* PCR5 analog input */
+
+
+}
+
+
 int main(void)
 {
     tpm_config_t tpmInfo;
@@ -45,7 +54,7 @@ int main(void)
 
     /* Configure tpm params with frequency 24kHZ */
     tpmParam[0].chnlNumber = (tpm_chnl_t)BOARD_FIRST_TPM_CHANNEL;
-    tpmParam[0].level = kTPMLowTrue;
+    tpmParam[0].level = kTPM_LowTrue;
     tpmParam[0].dutyCyclePercent = updatedDutycycle;
 
     tpmParam[1].chnlNumber = (tpm_chnl_t)BOARD_SECOND_TPM_CHANNEL;
@@ -82,6 +91,7 @@ int main(void)
 
     TPM_SetupPwm(BOARD_TPM_BASEADDR, tpmParam, 2U, kTPM_EdgeAlignedPwm, 24000U, TPM_SOURCE_CLOCK);
     TPM_StartTimer(BOARD_TPM_BASEADDR, kTPM_SystemClock);
+    int adcValue=0;
     while (1)
     {
 
