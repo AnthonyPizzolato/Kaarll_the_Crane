@@ -41,6 +41,13 @@ void pwminit(){
 	TPM0->SC =TPM_SC_PS(3);
 	TPM0->MOD=DEFAULT_SYSTEM_CLOCK/25;
  TPM0->CONTROLS[0].CnSC = TPM_CnSC_MSB_MASK;
+  tpmParam[0].chnlNumber = (tpm_chnl_t)BOARD_FIRST_TPM_CHANNEL;
+    tpmParam[0].level = kTPM_LowTrue;
+    tpmParam[0].dutyCyclePercent = updatedDutycycle;
+
+    tpmParam[1].chnlNumber = (tpm_chnl_t)BOARD_SECOND_TPM_CHANNEL;
+    tpmParam[1].level = TPM_LED_ON_LEVEL;
+    tpmParam[1].dutyCyclePercent = updatedDutycycle;
 
 }
 
