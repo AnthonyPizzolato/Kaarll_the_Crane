@@ -38,6 +38,10 @@ void pwminit(){
 	SIM -> SCGC5 |= SIM_SCGC5_PORTD_MASK;
 
 	PORTD-> PCR[5] = (1<<8); /* PCR5 analog input */
+	SIM-> SOPT2 |= SIM_SOPT2TPMSRC(0);
+	TPM0->STATUS=0;
+	TPM0->SC =TPM_SC_PS(3);
+	TPM0->MOD=DEFAULT_SYSTEM_CLOCK/25;
 
 
 }
