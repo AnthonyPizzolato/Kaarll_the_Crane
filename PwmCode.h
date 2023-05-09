@@ -100,7 +100,7 @@ int main(void)
     {
 
 
-        updatedDutycycle = (int)((adcValue/4095) *100) ;
+        updatedDutycycle = (int)((adcValue/4095) *5)+5 ;
 
         //convert to percentage and multiply by 100
 
