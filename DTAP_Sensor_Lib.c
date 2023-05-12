@@ -45,6 +45,7 @@ void ADC_Intializer(){
 //	ADC0 -> CFG1 |= (1 << 4); //long sample time,
 	SIM-> SCGC5 |= 0x2000; /* clock to PORTE */
 	PORTE-> PCR[16] = 0; /* PTE16 analog input */
+	PORTE-> PCR[18] = 0; /* PTE18 analog input */
 	PORTE-> PCR[20] = 0; /* PTE20 analog input */
 	SIM-> SCGC6 |= 0x8000000; /* clock to ADC0 */
 	ADC0-> SC2 &= ~ 0x40; /* software triggers */
@@ -81,64 +82,13 @@ void PWM_Intializer(void){
 }
 
 int potRead(void){
+	//This function does the conversion for ADC0
 	while (!(ADC0-> SC1[0] & ADC_SC1_COCO_MASK)){} /* wait for conversion complete */
 	short int result = ADC0-> R[0];
 	return result;
 	}
 
-void PWM_Logic(int digital_signal){
 
-}
-
-//void PIT_IRQHandler(void)
-//{
-//	/* code goes here */
-//	if(PIT -> CHANNEL[1].TFLG == 1){
-//		int adcValueA=4095;
-//		int adcValueB=3000;
-//		int adcValueC=1000;
-//		timeSA=(int)((adcValueA/4095.0) *timeShort)+timeShort*1.5;
-//		timeSB=(int)((adcValueB/4095.0) *timeShort)+timeShort*1.5;
-//		timeSC=(int)((adcValueC/4095.0) *timeShort)+timeShort*1.5;
-//		if(whichOn==1){
-//			//turn servo A off
-//			PTD -> PCOR |= GPIO_PCOR_PTCO(1 << 5);
-//			//turn servo B on
-//			PTD -> PSOR |= GPIO_PCOR_PTCO(1 << 4);
-//			PIT->CHANNEL[1].LDVAL = timeSB;
-//			whichOn++;
-//		}
-//		else if(whichOn==2){
-//			//turn servo B off
-//			PTD -> PCOR |= GPIO_PCOR_PTCO(1 << 4);
-//
-//			//turn servo /c on
-//			PTD -> PSOR |= GPIO_PCOR_PTCO(1 << 2);
-//			PIT->CHANNEL[1].LDVAL = timeSC;
-//			whichOn++;
-//		}
-//		else{
-//			//turn off servo C
-//			PTD -> PCOR |= GPIO_PCOR_PTCO(1 << 2);
-//			whichOn++;
-//
-//		}
-//
-//	}
-//	if(PIT -> CHANNEL[0].TFLG == 1){
-//		PIT->CHANNEL[0].LDVAL = timeLong;
-//		PIT->CHANNEL[1].LDVAL = timeSA;
-//		//set servo A on
-//		PTD -> PSOR |= GPIO_PCOR_PTCO(1 << 5);
-//		whichOn=1;
-//
-//
-//	}
-//	NVIC_ClearPendingIRQ(PIT_IRQn);
-//	PIT->CHANNEL[0].TFLG = PIT_TFLG_TIF_MASK;
-//	PIT->CHANNEL[1].TFLG = PIT_TFLG_TIF_MASK;
-//
-//}
 
 
 
