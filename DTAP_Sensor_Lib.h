@@ -8,7 +8,7 @@ void PWM_Logic(int);
 //NEED a function that initialize all of the pins that will be used by the pot and servo
 void ADC_Intializer(void);
 void PWM_Intializer(void);
-//Only use this function if Anthony wantes to use it
-void PWM_PIT_ISR(void);
+//Only use this function if Anthony wants to use it
+void PIT_IRQHandler(void);
 
 #endif
