@@ -7,7 +7,7 @@ int timeSC=0;
 const int timeLong = 0x3333; //Set interrupt times
 const int timeShort = 0x28F;
 int whichOn=1;
-int servo_On;
+int pot_On;
 
 int adcValueA;
 int adcValueB;
@@ -15,34 +15,34 @@ int adcValueC;
 
 int main(void){
 	//short int result;
+	PWM_Intializer();
 	ADC_Intializer();
-	//PWM_Intializer();
 
 	while(1){
 		//Maybe disable the Pit timer when the conversion starts then enable it again?
-		NVIC_DisableIRQ(PIT_IRQn);
-//		if (servo_On == 0){
-//			ADC0 -> SC1[0] = 0; /* start conversion on channel 0 */
-//			short int result0 = potRead();
-//			adcValueA = result0;
-//			servo_On++;
-//		}
-//		else if (servo_On == 1){
-//			ADC0 -> SC1[0] = 1;
-//			short int result1 = potRead();
-//			adcValueB = result1;
-//			servo_On++;
-//		}
-//		else{
-//			ADC0 -> SC1[0] = 2;
-//			short int result2 = potRead();
-//			adcValueC = result2;
-//			servo_On = 0;
-//		}
-		ADC0 -> SC1[0] = 0;
-		short int result = potRead();
-		adcValueA = result;
-		NVIC_EnableIRQ(PIT_IRQn);
+		//NVIC_DisableIRQ(PIT_IRQn);
+		if (pot_On == 0){
+			ADC0 -> SC1[0] = 0; /* start conversion on PTE20 pin */
+			short int result0 = potRead();
+			adcValueA = result0; //Places the digital signal into Load value for servo A
+			pot_On++;
+		}
+		else if (pot_On == 1){
+			ADC0 -> SC1[0] = 1; /* start conversion on PTE16 pin */
+			short int result1 = potRead(); //Outputs a digital signal
+			adcValueB = result1; //Places the digital signal into Load value for servo B
+			pot_On++;
+		}
+		else{
+			ADC0 -> SC1[0] = 2; /* start conversion on PTE18 pin */
+			short int result2 = potRead();
+			adcValueC = result2; //Places the digital signal into Load value for servo C
+			pot_On = 0;
+		}
+//		ADC0 -> SC1[0] = 0;
+//		short int result = potRead();
+//		adcValueA = result;
+		//NVIC_EnableIRQ(PIT_IRQn);
 
 	}
 
